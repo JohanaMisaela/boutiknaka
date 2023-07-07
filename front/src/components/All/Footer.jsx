@@ -11,7 +11,9 @@ import {Link} from 'react-router-dom'
 function Footer() {
     const date = Date.UTC
   return (
-    <div className='footer'>
+    <div className='footer' style={{
+        textAlign:"center"
+    }}>
         <div className="footer1">
         <div className="logoFooter">
             <img src={logo} alt="" />

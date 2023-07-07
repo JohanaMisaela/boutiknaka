@@ -5,18 +5,18 @@ import C2 from '../../assets/images/vista.png'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/instance'
 function ViewItem() {
- const index = useParams()
- const [produits, setProduits] = useState([]);
+ const {productId} = useParams()
+ const [produit, setProduit] = useState([]);
    
   
  useEffect(() => {
    Load();
- }, []);
+ }, [productId]);
 
  async function Load() {
    try {
-     const response = await axiosInstance.get('http://localhost:3002/user/getOne/'+index);
-     setProduits(response.data.data);
+     const response = await axiosInstance.get('http://localhost:3002/user/getOne/'+productId);
+     setProduit(response.data.data);
    } catch (error) {
      console.log("Failed to load products:", error);
    }
@@ -27,15 +27,18 @@ function ViewItem() {
         
         <div className="container1" style={{ marginTop:'2em'}}>
       <div className="images" >
-        <img className='img1' src={C2} />
+      {produit.image && (
+                  <img src={`http://localhost:3002/${produit.image}`} alt="Product" className='img1' 
+                  />
+                )}
       </div>
    
       <div className="product">
-        <p className='header'>{produits.nom}</p>
-        <h1 className='sousheader'>{produits.categorie}</h1>
-        <h2 className='paragraph'>{produits.prix}</h2>
+        <p className='header'>{produit.name}</p>
+        <h1 className='sousheader'>{produit.categorie}</h1>
+        <h2 className='paragraph'>{produit.prix}</h2>
         <p className="desc paragraph">
-       {produits.description}
+       {produit.description}
         </p>
         <div className="buttons" >
           <button className="add">Add to Cart

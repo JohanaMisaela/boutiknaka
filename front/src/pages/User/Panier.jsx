@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Navbar from '../../components/User/Navbar'
 import Footer from '../../components/All/Footer'
 import PanierList from '../../components/User/PanierList'
 import CardPanier from '../../components/User/CardPanier'
 
-function Panier() {
+function Panier({ produit }) {
+  
   return (
     <div>
         <Navbar />

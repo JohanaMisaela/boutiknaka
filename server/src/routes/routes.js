@@ -14,4 +14,7 @@ router.route('/user/update/:id').patch(userController.updateUserController);
 
 router.route('/user/delete/:id').delete(userController.deleteUserController);
 
+router.route('/user/createOrder').post(userController.createOrderFn);
+
+
 module.exports = router;

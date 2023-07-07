@@ -17,6 +17,7 @@ var getOneController = async (req, res) => {
 var createUserControllerFn = async (req, res) => {
   try {
     var userDetails = req.body;
+    console.log(userDetails)
     userDetails.image = req.file.filename;
 
     var status = await userService.createUserDBService(userDetails);
@@ -55,5 +56,23 @@ var deleteUserController = async (req, res) => {
   }
 }
 
+var createOrderFn = async (req,res) =>{
+  try{
+      var orderDetails = req.body;
+      console.log(orderDetails)
+      // orderDetails.image = req.file.filename;
+      var status = await userService.createOrder(orderDetails);
 
-module.exports = { getDataConntrollerfn, createUserControllerFn, updateUserController, deleteUserController , getOneController};
+  if (status) {
+    res.send({ "status": true, "message": "order created successfully" });
+  } else {
+    res.send({ "status": false, "message": "Error creating order" });
+  }
+} catch (error) {
+  console.error(error);
+  res.send({ "status": false, "message": "Error creating order" });
+
+  }
+}
+
+module.exports = { getDataConntrollerfn, createUserControllerFn, updateUserController, deleteUserController , getOneController, createOrderFn};

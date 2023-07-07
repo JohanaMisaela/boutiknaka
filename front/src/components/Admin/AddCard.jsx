@@ -11,6 +11,7 @@ function AddCard() {
     categorie: "",
     description: "",
     prix: "",
+    in_stock:"",
     image: null,
   });
     async function saveProduit(event) {
@@ -21,6 +22,7 @@ function AddCard() {
         formData.append("categorie", formValues.categorie);
         formData.append("description", formValues.description);
         formData.append("prix", formValues.prix);
+        formData.append("in_stock", formValues.in_stock);
         formData.append("image", formValues.image);
     
         try {
@@ -164,7 +166,29 @@ function AddCard() {
                     value={formValues.description}
                     />
                     </div>
-                   
+                    <div style={{
+                    display:"flex",
+                    flexDirection:"row",
+                    paddingTop:"1em"   
+                }}>
+                    <label htmlFor="in_stock" style={{
+                        fontSize:"20px",
+                        color:"rgb(114, 110, 110)",
+                        fontFamily:"Verdana, Geneva, Tahoma, sans-serif",
+                        marginLeft:"10em",
+                        marginBottom:"15px"
+
+                    }}>Produit en stock : </label>
+                    <input type="text" name="in_stock" id="" style={{
+                        border:"1px solid #ededed",
+                        width:"300px",
+                        height:"30px",
+                        marginLeft:"5.5em"
+                    }}
+                    onChange={handleFormInputChange}
+                    value={formValues.in_stock}
+                    />
+                    </div>
                     <div style={{
                     display:"flex",
                     flexDirection:"row",

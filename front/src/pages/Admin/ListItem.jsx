@@ -7,7 +7,7 @@ function ListItem() {
   return (
     <div>
       <AdminNavbar />
-        <TablesProduct />
+        <TablesProduct/>
         <Footer />
     </div>
   )

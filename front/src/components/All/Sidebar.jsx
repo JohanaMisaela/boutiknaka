@@ -17,7 +17,7 @@ function Sidebar() {
       const uniqueCategories = Array.from(new Set(categories));
   
       setProduits(uniqueCategories);
-      console.log(result.data);
+      // console.log(result.data);
     }
   
   return (

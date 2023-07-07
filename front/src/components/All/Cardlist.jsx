@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 
 function Cardlist() {
     const [produits, setProduits] = useState([]);
-   
+   console.log(produit)
   
     useEffect(() => {
       Load();
@@ -17,6 +17,7 @@ function Cardlist() {
       try {
         const response = await axiosInstance.get("http://localhost:3002/user/getAll");
         setProduits(response.data.data);
+
       } catch (error) {
         console.log("Failed to load products:", error);
       }
@@ -30,7 +31,7 @@ function Cardlist() {
         <div className="card"  key={index}>
        
             <div className="produitPicture">
-              <Link to='/viewpro/${index}'>{produit.image && (
+              <Link to={`/viewpro/${produit._id}`}>{produit.image && (
                   <img src={`http://localhost:3002/${produit.image}`} alt="Product" className='w-[50px]' 
                   />
                 )}</Link>  
@@ -45,7 +46,7 @@ function Cardlist() {
                 <p className="paragraph" style={{
                     marginLeft:"1em",
                     marginTop:"2em"
-                }}>Avalability : {produit._id}</p>
+                }}>Avalability : {produit.in_stock}</p>
                 <div className="buttonAdd" >
                     <FontAwesomeIcon icon={faCartShopping} style={{
                         color:"white",

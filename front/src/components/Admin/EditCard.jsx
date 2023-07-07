@@ -3,25 +3,28 @@ import axiosInstance from '../../axios/instance';
 import logobnk from '../../assets/images/logobnk.jpeg'
 
 function EditCard({ product, closeModal }) {
-  const [nom, setName] = useState(product.name);
+  const [name, setName] = useState(product.name);
   const [categorie, setCategorie] = useState(product.categorie);
   const [description, setDescription] = useState(product.description);
   const [prix, setPrix] = useState(product.prix);
   const [image, setImage] = useState(null);
-
+  const [in_sotck, setIn_stock] = useState(product.in_stock)
   async function updateProduct(event) {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", nom);
+    formData.append("name", name);
     formData.append("categorie", categorie);
     formData.append("description", description);
     formData.append("prix", prix);
+    formData.append("in_stock", in_sotck);
     formData.append("image", image);
+
+
 
     try {
       await axiosInstance.patch(
-        "http://localhost:3002/user/update/" + product._id,
+        "http://localhost:3002/user/update/"+product._id,
         formData
       );
       alert("Product updated successfully");
@@ -68,13 +71,13 @@ function EditCard({ product, closeModal }) {
                         marginLeft:"10em",
                         marginBottom:"15px"
                     }}>Nom du produit : </label>
-                    <input type="text" name="nom" id="" style={{
+                    <input type="text" name="name" id="" style={{
                         border:"1px solid #ededed",
                         width:"300px",
                         height:"30px",
                         marginLeft:"5em"
                     }} 
-                    value={nom} 
+                    value={name} 
                     onChange={(e) => setName(e.target.value)}
                     />
                     </div>
@@ -98,7 +101,7 @@ function EditCard({ product, closeModal }) {
                         marginLeft:"6.7em"
                     }} 
                     value={categorie} 
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setCategorie(e.target.value)}
                     />
                     </div>
                     <div style={{
@@ -121,7 +124,7 @@ function EditCard({ product, closeModal }) {
                         marginLeft:"5.5em"
                     }}
                     value={prix} 
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setPrix(e.target.value)}
                     />
                     </div>
                     <div style={{
@@ -144,7 +147,30 @@ function EditCard({ product, closeModal }) {
                         marginLeft:"8.3em"
                     }}
                     value={description} 
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setDescription(e.target.value)}
+                    />
+                    </div>
+                    <div style={{
+                    display:"flex",
+                    flexDirection:"row",
+                    paddingTop:"1em"   
+                }}>
+                    <label htmlFor="nameItem" style={{
+                        fontSize:"20px",
+                        color:"rgb(114, 110, 110)",
+                        fontFamily:"Verdana, Geneva, Tahoma, sans-serif",
+                        marginLeft:"10em",
+                        marginBottom:"15px"
+
+                    }}>Stock : </label>
+                    <input type="text" name="in_stock" id="" style={{
+                        border:"1px solid #ededed",
+                        width:"300px",
+                        height:"30px",
+                        marginLeft:"8.3em"
+                    }}
+                    value={in_sotck} 
+                    onChange={(e) => setIn_stock(e.target.value)}
                     />
                     </div>
                    

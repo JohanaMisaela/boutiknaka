@@ -19,6 +19,10 @@ var userSchema = new Schema({
     type: String,
     required: true
   },
+  in_stock: {
+    type: String,
+    required: true
+  },
   image: {
     type: String,  // Vous pouvez utiliser le type String pour stocker le chemin de l'image
     required: true

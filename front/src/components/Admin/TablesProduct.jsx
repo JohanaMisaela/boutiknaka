@@ -1,133 +1,136 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { MaterialReactTable } from 'material-react-table';
-// import { makeData } from './makeData';
-
-const TablesProduct = () => {
-  const columns = useMemo(
-    //column definitions...
-    () => [
-      {
-        accessorKey: 'firstName',
-        header: 'First Name',
-        size: 150,
-      },
-      {
-        accessorKey: 'middleName',
-        header: 'Middle Name',
-        size: 170,
-      },
-      {
-        accessorKey: 'lastName',
-        header: 'Last Name',
-        size: 150,
-      },
-      {
-        accessorKey: 'email',
-        header: 'Email Address',
-        size: 300,
-      },
-      {
-        accessorKey: 'phoneNumber',
-        header: 'Phone Number',
-        size: 250,
-      },
-      {
-        accessorKey: 'address',
-        header: 'Address',
-        size: 300,
-      },
-      {
-        accessorKey: 'zipCode',
-        header: 'Zip Code',
-      },
-      {
-        accessorKey: 'city',
-        header: 'City',
-      },
-      {
-        accessorKey: 'state',
-        header: 'State',
-      },
-      {
-        accessorKey: 'country',
-        header: 'Country',
-        size: 350,
-      },
-      {
-        accessorKey: 'petName',
-        header: 'Pet Name',
-      },
-      {
-        accessorKey: 'age',
-        header: 'Age',
-      },
-      {
-        accessorKey: 'salary',
-        header: 'Salary',
-      },
-      {
-        accessorKey: 'dateOfBirth',
-        header: 'Date of Birth',
-      },
-      {
-        accessorKey: 'dateOfJoining',
-        header: 'Date of Joining',
-      },
-      {
-        accessorKey: 'isActive',
-        header: 'Is Active',
-      },
-    ],
-    [],
-    //end
-  );
-
-  //optionally access the underlying virtualizer instance
-  const rowVirtualizerInstanceRef = useRef(null);
-
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [sorting, setSorting] = useState([]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // setData(makeData(10_000));
-      setIsLoading(false);
-    }
+import React , {useState, useEffect}from 'react'
+import { Link } from 'react-router-dom'
+import Navbar from '../../components/User/Navbar'
+import Footer from '../../components/All/Footer'
+import '../../assets/css/table.css'
+import axiosInstance from '../../axios/instance'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import EditCard from './EditCard'
+function TablesProducts() {
+  const [produits, setProduits] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);  useEffect(() => {
+    Load();
   }, []);
-
-  useEffect(() => {
-    //scroll to the top of the table when the sorting changes
+  async function Load() {
     try {
-      rowVirtualizerInstanceRef.current?.scrollToIndex?.(0);
+      const response = await axiosInstance.get("http://localhost:3002/user/getAll");
+      setProduits(response.data.data);
+
     } catch (error) {
-      console.error(error);
+      console.log("Failed to load products:", error);
     }
-  }, [sorting]);
+  }
+  function openModal(product) {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  }
 
+  function closeModal() {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  }
+
+  async function deleteProduct(_id) {
+    try {
+      await axiosInstance.delete("http://localhost:3002/user/delete/" + _id);
+      alert("Product deleted successfully");
+      Load();
+    } catch (error) {
+      alert("Failed to delete product");
+    }
+  }
   return (
-    <MaterialReactTable
-      columns={columns}
-      // data={data} //10,000 rows
-      enableBottomToolbar={false}
-      enableColumnResizing
-      enableColumnVirtualization
-      enableGlobalFilterModes
-      enablePagination={false}
-      enablePinning
-      enableRowNumbers
-      enableRowVirtualization
-      muiTableContainerProps={{ sx: { maxHeight: '600px' } }}
-      onSortingChange={setSorting}
-      state={{ isLoading, sorting }}
-      rowVirtualizerInstanceRef={rowVirtualizerInstanceRef} //optional
-      rowVirtualizerProps={{ overscan: 5 }} //optionally customize the row virtualizer
-      columnVirtualizerProps={{ overscan: 2 }} //optionally customize the column virtualizer
-    />
-  );
-};
+    <div>
+            <Navbar/>
+    <p className="sousheader" style={{
+        marginLeft:"15%",
+        marginBottom:"-6em",
+        marginTop:"2em",  marginBottom:"2em",
+    }}>LISTES ITEMS
+    </p>
+    <div className="logincard" style={{
+		border:"0"
+	}}>
+    <div className="table">
+		<div className="table-header">
+			<div className="header__item"><a id="name" className="filter__link" href="#">Id</a></div>
+			<div className="header__item"><a id="wins" className="filter__link filter__link--number" href="#">Nom</a></div>
+			<div className="header__item"><a id="draws" className="filter__link filter__link--number" href="#">Prix</a></div>
+			<div className="header__item"><a id="losses" className="filter__link filter__link--number" href="#">Categorie</a></div>
+			<div className="header__item"><a id="total" className="filter__link filter__link--number" href="#">Description</a></div>
+			<div className="header__item"><a id="total" className="filter__link filter__link--number" href="#">image</a></div>
+			<div className="header__item"><a id="total" className="filter__link filter__link--number" href="#">stock</a></div>
+			<div className="header__item"><a id="total" className="filter__link filter__link--number" href="#">Action</a></div>
 
-//virtualizerInstanceRef was renamed to rowVirtualizerInstanceRef in v1.5.0
-//virtualizerProps was renamed to rowVirtualizerProps in v1.5.0
 
-export default TablesProduct;
+        </div>
+		<div className="table-content" style={{
+      textAlign:"center",
+      justifyContent:"center",
+      alignItems:"cenetr"
+    }}>	
+    {produits.map((produit, index) => (
+			<div className="table-row" key={index}>		
+				<div className="table-data">{produit._id}</div>
+				<div className="table-data">{produit.name}</div>
+				<div className="table-data">{produit.prix}</div>
+				<div className="table-data">{produit.categorie}</div>
+				<div className="table-data">{produit.description}</div>
+				<div className="table-data">{produit.in_stock}</div>
+
+				<div className="table-data">  {produit.image && (
+                  <img src={`http://localhost:3002/${produit.image}`} alt="Product" className='w-[50px]' style={{
+                    width:"100px",
+                    height:"100px",
+                    textAlign:"center",
+                    marginTop:"35%",
+                    justifyContent:"center",
+                    alignItems:"cenetr"
+                  }} />
+                )}</div>
+				<div className="table-data">
+          <FontAwesomeIcon icon={faEdit} onClick={() => openModal(produit)} style={{
+                    fontSize:"40px",
+                    color:"rgb(114, 110, 110)",
+                    justifyContent:"center",
+                    alignItems:"cenetr",
+                    marginLeft:"10px",
+                    marginRight:"10px"
+                    }}></FontAwesomeIcon> 
+          <FontAwesomeIcon icon={faTrash} onClick={() => deleteProduct(produit._id)} style={{
+                    fontSize:"40px",
+                    color:"red",
+                    justifyContent:"center",
+                    alignItems:"cenetr",
+                    marginTop:"35%",
+                    marginLeft:"10px",
+                    marginRight:"10px"
+                    }}/>
+        </div>
+
+			</div>)
+      )}
+
+			
+			
+		</div>	
+	</div>
+	<p className="paragraph" style={{
+		margin:"2em"
+	}}>
+Voici Les PRODUITS DISPO .</p>
+    </div>
+    {isModalOpen && (
+        <EditCard 
+          product={selectedProduct}
+          closeModal={closeModal}
+        />
+      )}
+    <Footer />
+    </div>
+  )
+}
+
+export default TablesProducts

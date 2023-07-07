@@ -1,6 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import store from "./redux/store";  
+import { Provider } from "react-redux";
 
 import Main from './pages/User/Main';
 import Viewpro from './pages/User/Viewpro';
@@ -24,36 +24,36 @@ import Paiement from './pages/All/Paiement';
 import Adresse from './pages/All/Adresse';
 
 function App() {
-  return (
-    <div className="App">
-      
-    <BrowserRouter>
-    <Routes>
-  //user routes
-      <Route path="/" element={<Main />}></Route>
-      <Route path="/viewpro" element={<Viewpro />}></Route>
-      <Route path="/panier" element={<Panier />}></Route> 
-      <Route path="/compte" element={<Moncompte />}></Route>
-      <Route path="/information" element={<Information />}></Route>
-      <Route path="/adresse" element={<Adresse />}></Route>
-      <Route path="/historique" element={<Historique />}></Route>
-      <Route path="/wish" element={<Wishlist />}></Route>
-//admin routes
-      <Route path="/additem" element={<Additem />}></Route>
-      <Route path="/allcommand" element={<AllCommand />}></Route>
-      <Route path="/admin" element={<AdminMain />}></Route>
-      <Route path="/listItem" element={<ListItem />}></Route>
-//all routes
-      <Route path="/auth" element={<Auth />}></Route>
-      <Route path="/signup" element={<Signup />}></Route>
-      <Route path="/livraison" element={<Livraison />}></Route>
-      <Route path="/conditions" element={<Conditions />}></Route>
-      <Route path="/mentions" element={<Mentions />}></Route>
-      <Route path="/paiement" element={<Paiement />}></Route>
+  return (      
+    <Provider store={store}>
 
-</Routes>
-  </BrowserRouter>
-    </div>
+      <Router>
+        <Routes>
+  {/* //user routes */}
+          <Route path="/" element={<Main />} />
+          <Route path="/viewpro/:productId" element={<Viewpro />} />
+          <Route path="/panier" element={<Panier />} /> 
+          <Route path="/compte" element={<Moncompte />} />
+          <Route path="/information" element={<Information />} />
+          <Route path="/adresse" element={<Adresse />} />
+          <Route path="/historique" element={<Historique />} />
+          <Route path="/wish" element={<Wishlist />} />
+  {/* //admin routes */}
+          <Route path="/additem" element={<Additem />} />
+          <Route path="/allcommand" element={<AllCommand />} />
+          <Route path="/admin" element={<AdminMain />} />
+          <Route path="/listItem" element={<ListItem />} />
+  {/* //all routes */}
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/livraison" element={<Livraison />} />
+          <Route path="/conditions" element={<Conditions />} />
+          <Route path="/mentions" element={<Mentions />} />
+          <Route path="/paiement" element={<Paiement />} />
+      </Routes>
+      </Router>
+
+    </Provider>
   );
 }
 

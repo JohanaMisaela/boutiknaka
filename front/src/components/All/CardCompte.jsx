@@ -59,8 +59,9 @@ function CardCompte() {
      }}>
        <FontAwesomeIcon icon={faUserCircle} style={{
         fontSize:"5em",
-        marginTop:"0.5em"
-       }}/> </Link>
+        marginTop:"0.5em",
+        marginLeft:"40%"
+}}/> </Link>
        <p className="header" style={{
         textAlign:"center"
        }}>information</p>
@@ -78,7 +79,8 @@ function CardCompte() {
      }}>
           <FontAwesomeIcon icon={faLocation} style={{
         fontSize:"5em",
-        marginTop:"0.5em"
+        marginTop:"0.5em",
+        marginLeft:"40%"
        }}/>
        </Link>  
        <p className="header" style={{
@@ -100,7 +102,8 @@ function CardCompte() {
           }}>
           <FontAwesomeIcon icon={faCalendar} style={{
         fontSize:"5em",
-        marginTop:"0.5em"
+        marginTop:"0.5em",
+        marginLeft:"40%"
        }}/> </Link>
        <p className="header" style={{
         textAlign:"center"
@@ -125,7 +128,8 @@ function CardCompte() {
     }}>
        <FontAwesomeIcon icon={faTicket} style={{
         fontSize:"5em",
-        marginTop:"0.5em"
+        marginTop:"0.5em",
+        marginLeft:"40%"
        }}/>
        <p className="header" style={{
         textAlign:"center"
@@ -141,7 +145,8 @@ function CardCompte() {
     }}>
        <FontAwesomeIcon icon={faPaperclip} style={{
         fontSize:"5em",
-        marginTop:"0.5em"
+        marginTop:"0.5em",
+        marginLeft:"40%"
        }}/>
        <p className="header" style={{
         textAlign:"center"
@@ -156,7 +161,8 @@ function CardCompte() {
     }}>
        <FontAwesomeIcon icon={faSmile} style={{
         fontSize:"5em",
-        marginTop:"0.5em"
+        marginTop:"0.5em",
+        marginLeft:"40%"
        }}
        onClick={handleDeconnexion}
        />
