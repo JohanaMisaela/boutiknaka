@@ -10,7 +10,8 @@ exports.register = (req, res) => {
   console.log(req.body);
   const date = new Date()
   const formattedDate = date.toISOString().slice(0, 19).replace('T', ' '); 
-  console.log(formattedDate)
+  const nomRegister = req.body.nomRegister;
+  const adresseRegister = req.body.adresseRegister;
   const emailRegister = req.body.emailRegister;
   const passwordRegister = req.body.passwordRegister;
 
@@ -21,7 +22,7 @@ exports.register = (req, res) => {
 
     con.query(
       "INSERT INTO user (id,email,password,type,prenom,nom,adresse,date) VALUES(?,?,?,?,?,?,?,?)",
-      [null,emailRegister, hash,'client','','','',formattedDate],
+      [null,emailRegister, hash,'client',null,null,null,formattedDate],
       (err, result) => {
         console.log(err);
       }
@@ -32,38 +33,36 @@ exports.register = (req, res) => {
 
 
 exports.login = (req, res) => {
-  
   const email = req.body.email;
   const password = req.body.password;
 
-  
-
-  con.query("SELECT * FROM user WHERE email=? ", email, (err, result) => {
+  con.query("SELECT * FROM user WHERE email=?", email, (err, result) => {
     if (err) {
-      req.setEncoding({ err: err });
-    }
-     
-    if (result) {
-      bcrypt.compare(password, result[0].password, (err, reponse) => {
-        if (reponse) {
-            req.session.user = result
-             console.log(req.session.user);
-            res.status(200).json({
-              /* add token */
-               token:jswt.sign({
-                   nom:result[0].mom,
-                   type:result[0].type,
-                   email:result[0].email
-               },process.env.jwtkey),
-               data :req.session.user
-            })
-
-        } else {
-          res.send({ message: "wrong username / wrong password" });
-        }
-      });
+      console.log(err);
+      res.send({ error: 'Erreur lors de la connexion' });
     } else {
-      res.send({ message: "User doesnt exist" });
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].password, (err, response) => {
+          if (response) {
+            req.session.user = result;
+            console.log(req.session.user);
+            res.status(200).json({
+              token: jswt.sign({
+                nom: result[0].nom,
+                type: result[0].type,
+                email: result[0].email
+              }, process.env.jwtkey),
+              user: {
+                type: result[0].type
+              }
+            });
+          } else {
+            res.status(401).send({ message: "Nom d'utilisateur ou mot de passe incorrect" });
+          }
+        });
+      } else {
+        res.status(401).send({ message: "L'utilisateur n'existe pas" });
+      }
     }
   });
 };
@@ -116,3 +115,4 @@ exports.deleteUser = (req,res)=>{
     })
     
 }
+

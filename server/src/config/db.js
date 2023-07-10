@@ -12,9 +12,9 @@ var con = mysql.createConnection({
 });
 
 con.connect(function(err) {
-  if (err) throw err;
+ /*  if (err) throw err; */
   console.log("Connected with MySQL database!");
-});
+}); 
 
 const connectDB = async () => {
   try {
