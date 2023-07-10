@@ -15,8 +15,8 @@ import AllCommand from './pages/Admin/AllCommand';
 import AdminMain from './pages/Admin/AdminMain';
 import ListItem from './pages/Admin/ListItem';
 
-import Auth from './pages/All/Auth';
-import Signup from './pages/All/Signup';
+import Auth from './pages/Auth/Auth';
+import Signup from './pages/Auth/Signup';
 import Livraison from './pages/All/Livraison';
 import Conditions from './pages/All/Conditions';
 import Mentions from './pages/All/Mentions';

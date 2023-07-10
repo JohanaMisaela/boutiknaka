@@ -29,18 +29,24 @@ function Sidebar() {
             color:"white"
         }}>Toutes Categories</p></div>
         <div className="listCategorie">
-            <div className="cat">
-           <div className='text-categorie-liste'>
-            <ul className='p-2'>
-              {produits.map((categorie, index) => (
-                <a href='#' key={index}>
-                  <li className='flex justify-between items-center'>
+            <div className="cat"> 
+            {produits.map((categorie, index) => (
+           <div className='text-categorie-liste' key={index}>
+          
+            <ul className='p-2' >
+                <a href='#' >
+                  <li className='flex justify-between items-center' style={{
+              textDecoration:"none",
+              fontSize:"20px",
+              color:"rgb(114, 110, 110)"
+            }}>
                     {categorie} <IoIosArrowForward />
                   </li>
                 </a>
-              ))}
             </ul>
+            
           </div>
+           ))}
             </div> 
         </div>
     

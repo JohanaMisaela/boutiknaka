@@ -31,7 +31,11 @@ var orderSchema = new Schema({
   total : {
     type: String,
     required: true
-  }
+  },
+  status:{
+    type: String,
+    required: true
+  },
 });
 
 module.exports = mongoose.model('oder', orderSchema);
