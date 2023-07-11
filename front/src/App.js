@@ -25,30 +25,21 @@ import Mentions from './pages/All/Mentions';
 import Paiement from './pages/All/Paiement';
 import Adresse from './pages/All/Adresse';
 
-import VisitorGuard from './guards/visitor.guard'
 import ClientGuard from './guards/client.guard';
-import axiosInstance from './axios/instance';
+
+
+import { AuthAdmin_layout, AuthClient_layout, Authentified_layout } from '../src/Auth';
 
 function App() {
-  const [user, setUser] = useState(null);
-  const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
-  useEffect(() => {
-    axiosInstance.get('/user/me')
-      .then((user) => {
-        setUser(user.data);
-      })
-      .catch((err) => {
-      });
-  },[])
   
   return (      
-    <Provider store={store}>
+    <div>
 
-      <Router>
-      <UserContext.Provider value={providerValue}>
+     
 
-        <Routes>
+      <Routes>
   {/* //user routes */}
+        <Route element={<AuthClient_layout />}>     
           <Route path="/" element={<Main />} />
           <Route path="/viewpro/:productId" element={<Viewpro />} />
           <Route path="/panier" element={<ClientGuard element={<Panier />} />}/>
@@ -57,27 +48,30 @@ function App() {
           <Route path="/adresse" element={<ClientGuard element={<Adresse />} />}/>
           <Route path="/historique" element={<ClientGuard element={<Historique />} />}/>
           <Route path="/wish" element={<ClientGuard element={<Wishlist />} />}/>
-  
+        </Route>
+      </Routes>
   {/* //admin routes */}
-
+      <Routes>
+        <Route element={<AuthAdmin_layout />}>
           <Route path="/additem" element={<ClientGuard element={<Additem />} />}/> 
           <Route path="/allcommand" element={<ClientGuard element={<AllCommand />} />}/>
           <Route path="/admin" element={<ClientGuard element={<AdminMain />} />}/>
           <Route path="/listItem" element={<ClientGuard element={<ListItem />} />}/>
-  
+        </Route>
+      </Routes>
   {/* //all routes */}
-  
+      <Routes>
+        <Route element={<Authentified_layout/>}>
           <Route path="/auth" element={<Auth />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/livraison" element={<Livraison />} />
           <Route path="/conditions" element={<Conditions />} />
           <Route path="/mentions" element={<Mentions />} />
           <Route path="/paiement" element={<Paiement />} />
+        </Route>
       </Routes>
-      </UserContext.Provider>
-      </Router>
 
-    </Provider>
+      </div>
   );
 }
 
